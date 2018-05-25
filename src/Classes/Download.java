@@ -47,30 +47,28 @@ public class Download extends Observable implements Runnable {
     }
 
     /**
-     * Retorna la URL de descarga
-     * @return String
+     * @return URL de descarga
      */
     public String getUrl() {
         return url.toString();
     }
 
     /**
-     * Retorna el tamaño de la descarga (bytes)
-     * @return int
+     * @return Tamaño de la descarga (bytes)
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Progreso de la descarga (Porcentaje)
+     * @return Progreso de la descarga (Porcentaje)
      */
     public float getProgress() {
         return ((float) downloaded / size) * 100;
     }
 
     /**
-     * Retorna el Codigo de estado de la descarga
+     * @return Codigo de estado de la descarga
      */
     public int getStatus() {
         return status;
@@ -114,9 +112,8 @@ public class Download extends Observable implements Runnable {
     }
 
     /**
-     * Retorna el nombre del archivo a partir de una URL
-     * @param url
-     * @return String
+     * @param url del archivo
+     * @return Nombre del archivo
      */
     private String getFileName(URL url) {
         String fileName = url.getFile();
@@ -170,7 +167,7 @@ public class Download extends Observable implements Runnable {
             while (status == DOWNLOADING) {
                 /**
                  * Define el tamaño del buffer dependiendo de cuanto
-                 * del archivo reste por descargar.
+                 * el archivo reste por descargar.
                  */
                 byte buffer[];
                 if (size - downloaded > MAX_BUFFER_SIZE) {
