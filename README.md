@@ -1,5 +1,5 @@
 # Java-Download-Manager
-Gerenciador de Descargas en Java hecho con propósitos educativos. 
+Gerenciador de Descargas escrito en Java. Para propósitos educativos. 
 El código está basado en el libro "The complete reference Java - Seventh Edition" de Herbert Schild y 
 fueron añadidas algunas características. Contiene comentarios en español para mejor entendimiento.
 
