@@ -11,20 +11,25 @@ import javax.swing.table.AbstractTableModel;
  * @version 1.0.0.
  */
 public class DownloadsTableModel extends AbstractTableModel implements Observer {
-
+    // Array con el nombre de las columnas
     private static final String[] columnNames = {"URL", "Size", "Progress", "Status"};
-
+    // Para personalizar las columnas definimos un array de clases
     private static final Class[] columnClasses = {String.class,
         String.class, JProgressBar.class, String.class};
-
+    // Un ArrayList para los objetos Download
     private ArrayList downloadList = new ArrayList();
 
     public void addDownload(Download download) {
+        //Adiciona este objeto (this) como observador
+        //del objeto Download
         download.addObserver(this);
         downloadList.add(download);
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
     }
-
+    /**
+     * @param indice de la fila
+     * @return objeto Download de la fila seleccionada
+     */
     public Download getDownload(int row) {
         return (Download) downloadList.get(row);
     }
@@ -52,7 +57,6 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     public int getRowCount() {
         return downloadList.size();
     }
-
 
     public Object getValueAt(int row, int col) {
         Download download = (Download) downloadList.get(row);
