@@ -80,7 +80,7 @@ public class Download extends Observable implements Runnable {
         stateChanged();
     }
 
-    // Continua la descarga que estaba pausada
+    // Reanuda la descarga
     public void resume() {
         status = DOWNLOADING;
         stateChanged();
@@ -192,9 +192,9 @@ public class Download extends Observable implements Runnable {
                 stateChanged();
             }
             /**
-            Cambia el estado a COMPLETE. Al llegar a este punto
-            la descarga fue finalizada por completo.
-            */
+             * Cambia el estado a COMPLETE. Al llegar a este punto
+             * la descarga fue finalizada por completo.
+             */
             if (status == DOWNLOADING) {
                 status = COMPLETE;
                 stateChanged();

@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * @author Herbert Schildt
- * @version 1.0.0.
+ * @version 1.0.0
  */
 public class DownloadsTableModel extends AbstractTableModel implements Observer {
     // Array con el nombre de las columnas
@@ -17,18 +17,18 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     private static final Class[] columnClasses = {String.class,
         String.class, JProgressBar.class, String.class};
     // Un ArrayList para los objetos Download
-    private ArrayList downloadList = new ArrayList();
+    private ArrayList<Download> downloadList = new ArrayList<Download>();
 
     public void addDownload(Download download) {
         // Adiciona este objeto (this) como observador
-        //del objeto Download
+        // del objeto Download
         download.addObserver(this);
         // Adiciona el objeto a la lista de objetos Download
         downloadList.add(download);
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
     }
     /**
-     * @param indice de la fila
+     * @param row Indice de la fila
      * @return objeto Download de la fila seleccionada
      */
     public Download getDownload(int row) {

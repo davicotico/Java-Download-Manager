@@ -7,9 +7,9 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  * @author Herbert Schildt
- * @version 1.0.0.
+ * @version 1.0.0
  */
-// Renderizador derivado de JProgressBar para la celda de la Tabla
+// Renderizador para celdas de la Tabla
 public class ProgressRenderer extends JProgressBar implements TableCellRenderer {
 
     public ProgressRenderer(int min, int max) {
