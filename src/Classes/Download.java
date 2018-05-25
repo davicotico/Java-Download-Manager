@@ -164,7 +164,7 @@ public class Download extends Observable implements Runnable {
             file = new RandomAccessFile(this.folder + getFileName(url), "rw");
             file.seek(downloaded);
             /**
-             * 
+             * Obtener una secuencia de datos (stream) de la conexión abierta.
              */
             stream = connection.getInputStream();
             while (status == DOWNLOADING) {
