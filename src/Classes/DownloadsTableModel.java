@@ -69,7 +69,10 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
         }
         return "";
     }
-
+    /**
+     * Permite recibir notificaciones desde objectos de clase Download.
+     * Es llamado cuando un objeto Download notifica a sus Observers sobre algún cambio. 
+     */
     public void update(Observable o, Object arg) {
         int index = downloadList.indexOf(o);
         fireTableRowsUpdated(index, index);
