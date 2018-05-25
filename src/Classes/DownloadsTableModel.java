@@ -20,9 +20,10 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     private ArrayList downloadList = new ArrayList();
 
     public void addDownload(Download download) {
-        //Adiciona este objeto (this) como observador
+        // Adiciona este objeto (this) como observador
         //del objeto Download
         download.addObserver(this);
+        // Adiciona el objeto a la lista de objetos Download
         downloadList.add(download);
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
     }
