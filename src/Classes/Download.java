@@ -163,7 +163,9 @@ public class Download extends Observable implements Runnable {
 
             file = new RandomAccessFile(this.folder + getFileName(url), "rw");
             file.seek(downloaded);
-
+            /**
+             * 
+             */
             stream = connection.getInputStream();
             while (status == DOWNLOADING) {
                 /**
@@ -176,8 +178,13 @@ public class Download extends Observable implements Runnable {
                 } else {
                     buffer = new byte[size - downloaded];
                 }
-
+                // Leer bytes del servidor y colocarlos en buffer
+                // asigna a la variable read la cantidad de bytes leidos efectivamente.
                 int read = stream.read(buffer);
+                /**
+                 * Si la cantidad de bytes leidos es -1 significa que la descarga
+                 * fue completada y salimos del bucle.
+                 */
                 if (read == -1) {
                     break;
                 }
@@ -187,7 +194,10 @@ public class Download extends Observable implements Runnable {
                 downloaded += read;
                 stateChanged();
             }
-
+            /**
+            Cambia el estado a COMPLETE. Al llegar a este punto
+            la descarga fue finalizada por completo.
+            */
             if (status == DOWNLOADING) {
                 status = COMPLETE;
                 stateChanged();
