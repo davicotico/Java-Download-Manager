@@ -213,7 +213,8 @@ public class Download extends Observable implements Runnable {
                 }
             }
 
-            // Cierra la transmisión.
+            // Cierra el stream para liberar recursos utilizados.
+            // En este caso tambien equivale a cerrar la conexión.
             if (stream != null) {
                 try {
                     stream.close();
