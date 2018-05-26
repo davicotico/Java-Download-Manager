@@ -6,6 +6,8 @@ fueron añadidas nuevas características. Contiene comentarios en español para 
 
 Fue hecho en IDE Netbeans usando entorno Swing.
 
+![Vista Previa](https://raw.githubusercontent.com/davicotico/Java-Download-Manager/master/screenshots/jdownload-manager.gif)
+
 ## Tópicos
 * Programación multihilo 
 * Observers
