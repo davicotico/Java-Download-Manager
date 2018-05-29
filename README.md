@@ -11,7 +11,7 @@ Fue hecho en IDE Netbeans usando entorno Swing.
 ## Tópicos
 * Programación multihilo 
 * Observers
-* Personalización de Celdas en JTable (Herencia)
+* Personalización de Celdas en JTable
 * Conexión HTTP
 * Archivos
 
@@ -21,8 +21,15 @@ Fue hecho en IDE Netbeans usando entorno Swing.
 * Permite configurar la carpeta destino de las descargas.
 
 ## Contribuciones
-Este repositorio está abierto a contribuciones con mayor enfoque en la enseñanza. 
-Siendo así, las contribuciones en código fuente deberán venir con comentarios que ayuden a entender el funcionamiento 
+Este repositorio está abierto a contribuciones, siendo su principal enfoque: la enseñanza. 
+Por tal motivo, las contribuciones en código fuente deberán incluir comentarios que ayuden a entender el funcionamiento 
 de las rutinas implementadas.
 
-Te invito a visitar mi Canal en [YOUTUBE](https://www.youtube.com/c/DavidTiconaSaravia)
+Las contribuciones pueden ser:
+* Añadir nuevas funcionalidades o características
+* Corregir posibles bugs
+* Optimizar el código fuente
+* Mejorar la documentación (comentarios en código fuente)
+
+
+Te invito a visitar e inscribirte a mi Canal en [**YOUTUBE**](https://www.youtube.com/c/DavidTiconaSaravia)
