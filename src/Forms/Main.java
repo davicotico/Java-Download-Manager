@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -351,9 +353,18 @@ public class Main extends javax.swing.JFrame implements Observer {
     }
     // Verifica que sea una URL valida
     private URL verifyUrl(String url) {
-        // Permite solo archivos Http
-        if (!url.toLowerCase().startsWith("http://"))
+        //Verifica con expresiones regulares la validez de una URL
+        String urlRegex = "^(http|https)://[-a-zA-Z0-9+&@#/%?=~_|,!:.;]*[-a-zA-Z0-9+@#/%=&_|]";
+        Pattern pattern = Pattern.compile(urlRegex);
+        Matcher m = pattern.matcher(url);
+        if (! m.matches()){
             return null;
+        }
+        
+        // Permite solo archivos Http
+        //if (!url.toLowerCase().startsWith("http://"))
+        //    return null;
+        
         // Verifica el formato de la URL
         URL verifiedUrl = null;
         try {
@@ -369,9 +380,12 @@ public class Main extends javax.swing.JFrame implements Observer {
     // metodo llamado cuando la fila seleccionada de la tabla
     // cambia de estado.
     private void tableSelectionChanged() {
-        if (selectedDownload != null)
+        
+        if (selectedDownload != null){
             selectedDownload.deleteObserver(Main.this);
-        if (!clearing) {
+        }
+        
+        if ((!clearing) && (table.getSelectedRow()>-1)) {
             selectedDownload = tableModel.getDownload(table.getSelectedRow());
             selectedDownload.addObserver(Main.this);
             updateButtons();

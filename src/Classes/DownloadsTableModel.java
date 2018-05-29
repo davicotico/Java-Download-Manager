@@ -32,7 +32,7 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
      * @return objeto Download de la fila seleccionada
      */
     public Download getDownload(int row) {
-        return (Download) downloadList.get(row);
+        return downloadList.get(row);
     }
 
     public void clearDownload(int row) {
