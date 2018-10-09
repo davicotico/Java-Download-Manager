@@ -1,5 +1,5 @@
 # Java Download Manager
-Gerenciador de Descargas escrito en Java.
+Gestor de Descargas escrito en Java.
 
 Esta aplicación fue hecha para propósitos educativos. El código está basado en el libro "The complete reference Java - Seventh Edition" de Herbert Schildt y 
 fueron añadidas nuevas características. Contiene comentarios en español para mejor entendimiento.
