@@ -1,14 +1,15 @@
-package Classes;
+package io.github.davicotico.downloadmanager.components;
 
+import io.github.davicotico.downloadmanager.core.Download;
 import java.util.ArrayList;
 import java.util.Observable;
+import javax.swing.table.AbstractTableModel;
 import java.util.Observer;
 import javax.swing.JProgressBar;
-import javax.swing.table.AbstractTableModel;
 
 /**
- * @author Herbert Schildt
- * @version 1.0.0
+ *
+ * @author David Tomas Ticona Saravia
  */
 public class DownloadsTableModel extends AbstractTableModel implements Observer {
     // Array con el nombre de las columnas
@@ -17,7 +18,7 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     private static final Class[] columnClasses = {String.class,
         String.class, JProgressBar.class, String.class};
     // Un ArrayList para los objetos Download
-    private ArrayList<Download> downloadList = new ArrayList<Download>();
+    private ArrayList<Download> downloadList = new ArrayList<>();
 
     public void addDownload(Download download) {
         // Adiciona este objeto (this) como observador
@@ -40,6 +41,7 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
         fireTableRowsDeleted(row, row);
     }
 
+    @Override
     public int getColumnCount() {
         return columnNames.length;
     }
@@ -55,10 +57,12 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
         return columnClasses[col];
     }
 
+    @Override
     public int getRowCount() {
         return downloadList.size();
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         Download download = (Download) downloadList.get(row);
         switch (col) {
@@ -68,16 +72,19 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
                 int size = download.getSize();
                 return (size == -1) ? "" : Integer.toString(size);
             case 2: // Progreso
-                return new Float(download.getProgress());
+                return download.getProgress();
             case 3: // Estado
                 return Download.STATUSES[download.getStatus()];
         }
         return "";
     }
+    
     /**
-     * Permite recibir notificaciones desde objectos de clase Download.
-     * Es llamado cuando un objeto Download notifica a sus Observers sobre algún cambio. 
+     * Permite recibir notificaciones desde objectos de clase Download.Es llamado cuando un objeto Download notifica a sus Observers sobre algún cambio.
+     * @param o 
+     * @param arg 
      */
+    @Override
     public void update(Observable o, Object arg) {
         int index = downloadList.indexOf(o);
         fireTableRowsUpdated(index, index);

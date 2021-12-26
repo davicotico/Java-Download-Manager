@@ -1,4 +1,4 @@
-package Classes;
+package io.github.davicotico.downloadmanager.core;
 
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -7,15 +7,11 @@ import java.net.URL;
 import java.util.Observable;
 
 /**
- * @author Herbert Schildt
- * Contribuciones:
- * + David Ticona Saravia
- * + ...
- * Esta clase descarga un archivo desde una URL
- * @version 1.0.1
+ *
+ * @author David Tomas Ticona
  */
-
 public class Download extends Observable implements Runnable {
+
     // Tamaño Maximo del buffer de descarga
     private static final int MAX_BUFFER_SIZE = 1024;
     // Nombres de los estados
@@ -34,6 +30,7 @@ public class Download extends Observable implements Runnable {
 
     /**
      * Constructor
+     *
      * @param url URL del archivo
      * @param folder Directorio destino
      */
@@ -123,14 +120,15 @@ public class Download extends Observable implements Runnable {
     /**
      * HILO que descarga el archivo
      */
+    @Override
     public void run() {
         RandomAccessFile file = null;
         InputStream stream = null;
 
         try {
             // Abre una conexión HTTP sobre la URL
-            HttpURLConnection connection =
-                    (HttpURLConnection) url.openConnection();
+            HttpURLConnection connection
+                    = (HttpURLConnection) url.openConnection();
 
             // Se indica la porción del archivo a descargar
             connection.setRequestProperty("Range", "bytes=" + downloaded + "-");
@@ -150,8 +148,8 @@ public class Download extends Observable implements Runnable {
             }
 
             /**
-             * Asigna el tamaño de la descarga en caso que
-             * aún no haya sido asignado.
+             * Asigna el tamaño de la descarga en caso que aún no haya sido
+             * asignado.
              */
             if (size == -1) {
                 size = contentLength;
@@ -166,8 +164,8 @@ public class Download extends Observable implements Runnable {
             stream = connection.getInputStream();
             while (status == DOWNLOADING) {
                 /**
-                 * Define el tamaño del buffer dependiendo de cuanto
-                 * el archivo reste por descargar.
+                 * Define el tamaño del buffer dependiendo de cuanto el archivo
+                 * reste por descargar.
                  */
                 byte buffer[];
                 if (size - downloaded > MAX_BUFFER_SIZE) {
@@ -179,8 +177,8 @@ public class Download extends Observable implements Runnable {
                 // asigna a la variable read la cantidad de bytes leidos efectivamente.
                 int read = stream.read(buffer);
                 /**
-                 * Si la cantidad de bytes leidos es -1 significa que la descarga
-                 * fue completada y salimos del bucle.
+                 * Si la cantidad de bytes leidos es -1 significa que la
+                 * descarga fue completada y salimos del bucle.
                  */
                 if (read == -1) {
                     break;
@@ -192,8 +190,8 @@ public class Download extends Observable implements Runnable {
                 stateChanged();
             }
             /**
-             * Cambia el estado a COMPLETE. Al llegar a este punto
-             * la descarga fue finalizada por completo.
+             * Cambia el estado a COMPLETE. Al llegar a este punto la descarga
+             * fue finalizada por completo.
              */
             if (status == DOWNLOADING) {
                 status = COMPLETE;
