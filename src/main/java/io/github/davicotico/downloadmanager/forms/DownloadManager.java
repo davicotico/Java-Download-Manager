@@ -3,6 +3,7 @@ package io.github.davicotico.downloadmanager.forms;
 import io.github.davicotico.downloadmanager.components.DownloadsTableModel;
 import io.github.davicotico.downloadmanager.components.ProgressRenderer;
 import io.github.davicotico.downloadmanager.core.Download;
+import io.github.davicotico.downloadmanager.utils.ThemeManager;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -106,6 +107,8 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelUrl.add(txtUrl);
 
         btnAddDownload.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnAddDownload.setIcon(ThemeManager.icons.get("plus")
+        );
         btnAddDownload.setText("Add Download");
         btnAddDownload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +123,8 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelActionButtons.setPreferredSize(new java.awt.Dimension(301, 40));
 
         btnPause.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnPause.setIcon(ThemeManager.icons.get("pause")
+        );
         btnPause.setText("Pause");
         btnPause.setEnabled(false);
         btnPause.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +135,8 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelActionButtons.add(btnPause);
 
         btnResume.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnResume.setIcon(ThemeManager.icons.get("play")
+        );
         btnResume.setText("Resume");
         btnResume.setEnabled(false);
         btnResume.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +147,8 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelActionButtons.add(btnResume);
 
         btnCancelDownload.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnCancelDownload.setIcon(ThemeManager.icons.get("stop")
+        );
         btnCancelDownload.setText("Cancel");
         btnCancelDownload.setEnabled(false);
         btnCancelDownload.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +159,10 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelActionButtons.add(btnCancelDownload);
 
         btnClean.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnClean.setText("Clean");
+        btnClean.setIcon(ThemeManager.icons.get("minus-square")
+        );
+        btnClean.setText("Delete");
+        btnClean.setToolTipText("Delete selected item");
         btnClean.setEnabled(false);
         btnClean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +197,8 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelDownloadsFolder.add(txtDownloadsFolderPath);
 
         btnSearchFolder.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnSearchFolder.setIcon(ThemeManager.icons.get("folder-open")
+        );
         btnSearchFolder.setText("Browse...");
         btnSearchFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
