@@ -21,7 +21,7 @@ import javax.swing.filechooser.FileSystemView;
 
 /**
  *
- * @author David Tomas Ticona
+ * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
 public class DownloadManager extends javax.swing.JFrame implements Observer {
 
@@ -76,9 +76,10 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Download Manager v0.9.0");
         setMaximumSize(new java.awt.Dimension(1024, 768));
-        setMinimumSize(new java.awt.Dimension(700, 600));
-        setPreferredSize(new java.awt.Dimension(700, 600));
-        setSize(new java.awt.Dimension(700, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -94,7 +95,6 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelDownload.setLayout(new java.awt.BorderLayout(0, 5));
 
         panelUrl.setPreferredSize(new java.awt.Dimension(598, 40));
-        panelUrl.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         lblUrl.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         lblUrl.setText("URL");
@@ -107,7 +107,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelUrl.add(txtUrl);
 
         btnAddDownload.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        btnAddDownload.setIcon(ThemeManager.icons.get("plus")
+        btnAddDownload.setIcon(ThemeManager.icons.get("plus-square")
         );
         btnAddDownload.setText("Add Download");
         btnAddDownload.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +180,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
 
         panelDownload.add(scrollTblDownloads, java.awt.BorderLayout.CENTER);
 
-        tabDownloads.addTab("Download", panelDownload);
+        tabDownloads.addTab("Downloads", ThemeManager.icons.get("download"), panelDownload, "");
 
         panelSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelSettings.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -190,7 +190,6 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelDownloadsFolder.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         panelDownloadsFolder.setMinimumSize(new java.awt.Dimension(105, 80));
         panelDownloadsFolder.setPreferredSize(new java.awt.Dimension(652, 60));
-        panelDownloadsFolder.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         txtDownloadsFolderPath.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDownloadsFolderPath.setPreferredSize(new java.awt.Dimension(400, 25));
@@ -211,7 +210,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelDownloadsFolder.getAccessibleContext().setAccessibleName("");
         panelDownloadsFolder.getAccessibleContext().setAccessibleDescription("");
 
-        tabDownloads.addTab("Settings", panelSettings);
+        tabDownloads.addTab("Settings", ThemeManager.icons.get("wrench"), panelSettings, "");
 
         getContentPane().add(tabDownloads, java.awt.BorderLayout.SOUTH);
 
@@ -225,7 +224,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(415, Short.MAX_VALUE))
+                .addContainerGap(559, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

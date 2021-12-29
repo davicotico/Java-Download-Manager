@@ -9,7 +9,7 @@ import javax.swing.JProgressBar;
 
 /**
  *
- * @author David Tomas Ticona Saravia
+ * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
 public class DownloadsTableModel extends AbstractTableModel implements Observer {
     // Array con el nombre de las columnas
@@ -18,7 +18,7 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     private static final Class[] columnClasses = {String.class,
         String.class, JProgressBar.class, String.class};
     // Un ArrayList para los objetos Download
-    private ArrayList<Download> downloadList = new ArrayList<>();
+    final private ArrayList<Download> downloadList = new ArrayList<>();
 
     public void addDownload(Download download) {
         // Adiciona este objeto (this) como observador

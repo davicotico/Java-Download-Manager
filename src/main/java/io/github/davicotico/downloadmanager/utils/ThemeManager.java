@@ -14,7 +14,8 @@ import jiconfont.swing.IconFontSwing;
 
 /**
  *
- * @author David Tomas Ticona Saravia
+ * @author David Tomas Ticona Saravia (davicotico@yandex.com)
+ * 
  */
 public class ThemeManager {
     
@@ -41,12 +42,14 @@ public class ThemeManager {
     
     public static void populateIcons() {
          IconFontSwing.register(FontAwesome.getIconFont());
-         ThemeManager.icons.put("plus", IconFontSwing.buildIcon(FontAwesome.PLUS_SQUARE, 12, new Color(0, 150, 0)));
+         ThemeManager.icons.put("plus-square", IconFontSwing.buildIcon(FontAwesome.PLUS_SQUARE, 12, new Color(0, 150, 0)));
          ThemeManager.icons.put("pause", IconFontSwing.buildIcon(FontAwesome.PAUSE, 12, new Color(0, 150, 0)));
          ThemeManager.icons.put("play", IconFontSwing.buildIcon(FontAwesome.PLAY, 12, new Color(0, 150, 0)));
          ThemeManager.icons.put("stop", IconFontSwing.buildIcon(FontAwesome.STOP, 12, new Color(0, 150, 0)));
          ThemeManager.icons.put("folder-open", IconFontSwing.buildIcon(FontAwesome.FOLDER_OPEN, 12, new Color(0, 150, 0)));
          ThemeManager.icons.put("minus-square", IconFontSwing.buildIcon(FontAwesome.MINUS_SQUARE, 12, new Color(0, 150, 0)));
+         ThemeManager.icons.put("download", IconFontSwing.buildIcon(FontAwesome.DOWNLOAD, 12, new Color(0, 0, 0)));
+         ThemeManager.icons.put("wrench", IconFontSwing.buildIcon(FontAwesome.WRENCH, 12, new Color(0, 0, 0)));
     }
     
 }

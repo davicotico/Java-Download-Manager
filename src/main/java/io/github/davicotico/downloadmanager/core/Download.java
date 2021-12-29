@@ -8,7 +8,7 @@ import java.util.Observable;
 
 /**
  *
- * @author David Tomas Ticona
+ * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
 public class Download extends Observable implements Runnable {
 
