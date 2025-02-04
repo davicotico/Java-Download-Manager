@@ -1,16 +1,17 @@
 package io.github.davicotico.downloadmanager.core;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Observable;
 
 /**
  *
  * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
-public class Download extends Observable implements Runnable {
+public class Download implements Runnable {
 
     // Tamaño Maximo del buffer de descarga
     private static final int MAX_BUFFER_SIZE = 1024;
@@ -22,11 +23,15 @@ public class Download extends Observable implements Runnable {
     public static final int COMPLETE = 2;
     public static final int CANCELLED = 3;
     public static final int ERROR = 4;
-    private URL url; // download URL
+
+    // Soporte para PropertyChangeListener
+    private final PropertyChangeSupport support;
+
+    private final URL url; // download URL
     private int size; // Tamaño de la descarga en bytes
     private int downloaded; // bytes descargados
     private int status; // Actual estado de la descarga
-    private String folder; // Directorio destino para la descarga
+    private final String folder; // Directorio destino para la descarga
 
     /**
      * Constructor
@@ -35,12 +40,24 @@ public class Download extends Observable implements Runnable {
      * @param folder Directorio destino
      */
     public Download(URL url, String folder) {
+        // Inicializar PropertyChangeSupport
+        this.support = new PropertyChangeSupport(this);
+        
         this.url = url;
         size = -1;
         downloaded = 0;
         status = DOWNLOADING;
         this.folder = folder;
         download(); // Inicia el download.
+    }
+
+    // Métodos para agregar y remover PropertyChangeListener
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 
     /**
@@ -61,7 +78,7 @@ public class Download extends Observable implements Runnable {
      * @return Progreso de la descarga (Porcentaje)
      */
     public float getProgress() {
-        return ((float) downloaded / size) * 100;
+        return size > 0 ? ((float) downloaded / size) * 100 : 0;
     }
 
     /**
@@ -73,14 +90,16 @@ public class Download extends Observable implements Runnable {
 
     // Pausa la descarga
     public void pause() {
+        int oldStatus = status;
         status = PAUSED;
-        stateChanged();
+        stateChanged("status", oldStatus, status);
     }
 
     // Reanuda la descarga
     public void resume() {
+        int oldStatus = status;
         status = DOWNLOADING;
-        stateChanged();
+        stateChanged("status", oldStatus, status);
         download();
     }
 
@@ -88,16 +107,18 @@ public class Download extends Observable implements Runnable {
      * Cancela la descarga
      */
     public void cancel() {
+        int oldStatus = status;
         status = CANCELLED;
-        stateChanged();
+        stateChanged("status", oldStatus, status);
     }
 
     /**
      * Marca la actual descarga como ERROR
      */
     private void error() {
+        int oldStatus = status;
         status = ERROR;
-        stateChanged();
+        stateChanged("status", oldStatus, status);
     }
 
     /**
@@ -152,8 +173,9 @@ public class Download extends Observable implements Runnable {
              * asignado.
              */
             if (size == -1) {
+                int oldSize = size;
                 size = contentLength;
-                stateChanged();
+                stateChanged("size", oldSize, size);
             }
 
             file = new RandomAccessFile(this.folder + getFileName(url), "rw");
@@ -186,16 +208,18 @@ public class Download extends Observable implements Runnable {
 
                 // Escribe el buffer sobre el archivo
                 file.write(buffer, 0, read);
+                int oldDownloaded = downloaded;
                 downloaded += read;
-                stateChanged();
+                stateChanged("downloaded", oldDownloaded, downloaded);
             }
             /**
              * Cambia el estado a COMPLETE. Al llegar a este punto la descarga
              * fue finalizada por completo.
              */
             if (status == DOWNLOADING) {
+                int oldStatus = status;
                 status = COMPLETE;
-                stateChanged();
+                stateChanged("status", oldStatus, status);
             }
         } catch (Exception e) {
             error();
@@ -220,10 +244,9 @@ public class Download extends Observable implements Runnable {
     }
 
     /**
-     * Notifica a los Observers que el estado de la descarga ha cambiado
+     * Notifica a los PropertyChangeListeners que el estado de la descarga ha cambiado
      */
-    private void stateChanged() {
-        setChanged();
-        notifyObservers();
+    private void stateChanged(String propertyName, Object oldValue, Object newValue) {
+        support.firePropertyChange(propertyName, oldValue, newValue);
     }
 }

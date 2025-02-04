@@ -1,17 +1,17 @@
 package io.github.davicotico.downloadmanager.components;
 
 import io.github.davicotico.downloadmanager.core.Download;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Observable;
 import javax.swing.table.AbstractTableModel;
-import java.util.Observer;
 import javax.swing.JProgressBar;
 
 /**
  *
  * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
-public class DownloadsTableModel extends AbstractTableModel implements Observer {
+public class DownloadsTableModel extends AbstractTableModel implements PropertyChangeListener {
     // Array con el nombre de las columnas
     private static final String[] columnNames = {"URL", "Size", "Progress", "Status"};
     // Para personalizar las columnas definimos un array de clases
@@ -23,7 +23,7 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     public void addDownload(Download download) {
         // Adiciona este objeto (this) como observador
         // del objeto Download
-        download.addObserver(this);
+        download.addPropertyChangeListener(this);
         // Adiciona el objeto a la lista de objetos Download
         downloadList.add(download);
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
@@ -37,6 +37,8 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
     }
 
     public void clearDownload(int row) {
+        // Eliminar el listener antes de remover el download
+        downloadList.get(row).removePropertyChangeListener(this);
         downloadList.remove(row);
         fireTableRowsDeleted(row, row);
     }
@@ -78,15 +80,12 @@ public class DownloadsTableModel extends AbstractTableModel implements Observer 
         }
         return "";
     }
-    
-    /**
-     * Permite recibir notificaciones desde objectos de clase Download.Es llamado cuando un objeto Download notifica a sus Observers sobre algún cambio.
-     * @param o 
-     * @param arg 
-     */
+
     @Override
-    public void update(Observable o, Object arg) {
-        int index = downloadList.indexOf(o);
-        fireTableRowsUpdated(index, index);
+    public void propertyChange(PropertyChangeEvent evt) {
+        int index = downloadList.indexOf(evt.getSource());
+        if (index != -1) {
+            fireTableRowsUpdated(index, index);
+        }
     }
 }

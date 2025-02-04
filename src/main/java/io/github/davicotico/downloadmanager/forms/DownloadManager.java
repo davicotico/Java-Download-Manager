@@ -5,11 +5,11 @@ import io.github.davicotico.downloadmanager.components.ProgressRenderer;
 import io.github.davicotico.downloadmanager.core.Download;
 import io.github.davicotico.downloadmanager.utils.ThemeManager;
 import java.awt.Desktop;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileSystemView;
  *
  * @author David Tomas Ticona Saravia (davicotico@yandex.com)
  */
-public class DownloadManager extends javax.swing.JFrame implements Observer {
+public class DownloadManager extends javax.swing.JFrame implements PropertyChangeListener {
 
     private boolean clearing;
 
@@ -121,12 +121,15 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
 
         panelActionButtons.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         panelActionButtons.setPreferredSize(new java.awt.Dimension(301, 40));
+        panelActionButtons.setLayout(new java.awt.GridLayout());
 
         btnPause.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnPause.setIcon(ThemeManager.icons.get("pause")
         );
         btnPause.setText("Pause");
         btnPause.setEnabled(false);
+        btnPause.setMaximumSize(new java.awt.Dimension(75, 25));
+        btnPause.setPreferredSize(new java.awt.Dimension(75, 25));
         btnPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPauseActionPerformed(evt);
@@ -139,6 +142,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         );
         btnResume.setText("Resume");
         btnResume.setEnabled(false);
+        btnResume.setPreferredSize(new java.awt.Dimension(75, 25));
         btnResume.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResumeActionPerformed(evt);
@@ -151,6 +155,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         );
         btnCancelDownload.setText("Cancel");
         btnCancelDownload.setEnabled(false);
+        btnCancelDownload.setPreferredSize(new java.awt.Dimension(75, 25));
         btnCancelDownload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelDownloadActionPerformed(evt);
@@ -164,6 +169,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         btnClean.setText("Delete");
         btnClean.setToolTipText("Delete selected item");
         btnClean.setEnabled(false);
+        btnClean.setPreferredSize(new java.awt.Dimension(75, 25));
         btnClean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCleanActionPerformed(evt);
@@ -191,6 +197,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         panelDownloadsFolder.setMinimumSize(new java.awt.Dimension(105, 80));
         panelDownloadsFolder.setPreferredSize(new java.awt.Dimension(652, 60));
 
+        txtDownloadsFolderPath.setEditable(false);
         txtDownloadsFolderPath.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDownloadsFolderPath.setPreferredSize(new java.awt.Dimension(400, 25));
         panelDownloadsFolder.add(txtDownloadsFolderPath);
@@ -215,7 +222,7 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
         getContentPane().add(tabDownloads, java.awt.BorderLayout.SOUTH);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel1.setText("Download Manager v0.9.0");
+        jLabel1.setText("Download Manager v0.10.0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -394,12 +401,12 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
     private void tableSelectionChanged() {
 
         if (selectedDownload != null) {
-            selectedDownload.deleteObserver(DownloadManager.this);
+            selectedDownload.removePropertyChangeListener(this);
         }
 
         if ((!clearing) && (tblDownloads.getSelectedRow() > -1)) {
             selectedDownload = tableModel.getDownload(tblDownloads.getSelectedRow());
-            selectedDownload.addObserver(DownloadManager.this);
+            selectedDownload.addPropertyChangeListener(this);
             updateButtons();
         }
     }
@@ -470,9 +477,9 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        // Actualiza los botones en caso que la descarga seleccionada pasa por un cambio.
-        if (selectedDownload != null && selectedDownload.equals(o)) {
+    public void propertyChange(PropertyChangeEvent evt) {
+        // Actualiza los botones si la descarga seleccionada tiene cambios
+        if (selectedDownload != null && selectedDownload.equals(evt.getSource())) {
             updateButtons();
         }
     }
@@ -498,4 +505,5 @@ public class DownloadManager extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField txtDownloadsFolderPath;
     private javax.swing.JTextField txtUrl;
     // End of variables declaration//GEN-END:variables
+
 }
